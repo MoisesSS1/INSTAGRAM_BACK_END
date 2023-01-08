@@ -1,6 +1,9 @@
 //models 
 const UserModel  = require('../models/UserModel')
 const bcript = require('bcrypt')
+const jwt = require('jsonwebtoken')
+const cors = require('cors')
+const {ObjectId} = require('mongoose')
 
 
 
@@ -21,7 +24,7 @@ exports.CreateUserController = async (req,res)=>{
         res.json({message:"Preencha o nome corretamente!"})
     }
 
-    //checar se usuario existe
+    //checar se email já é utilizado
     const checkUserExist = await UserModel.findOne({email,email})
     if(checkUserExist){
         return res.json({message:"O e-mail já pertence a um usuario, utilize outro!"})
@@ -41,16 +44,18 @@ exports.CreateUserController = async (req,res)=>{
 
     try{
        const userSave = await UserModel.create(user)
-        return res.status(200).json({message:"Usuario cadastrado com sucesso"})
+
+       //gerando token de acesso
+       const _id = userSave._id.toString()
+       const token = await jwt.sign(_id, process.env.JWT_SECRET)
+       
+        return res.status(200).json({
+            auth:true,
+            token:token
+        })
 
     } catch(error){
-
         return res.status(422).json({message:`Houve um erro: ${error}`})
-
-    }
-   
-        
-
-       
+    }      
     
 }
