@@ -1,11 +1,9 @@
 const router = require('express').Router()
+const controllers = require('../controllers/UserControllers')
 
 
 //Criação de conta
-router.post('/createAccount', (req,res)=>{
-    const {name,password,email,phone} = req.body
-    
-})
+router.post('/create', controllers.CreateController)
 
 //puxar os dados atuais da conta para editar
 router.get('/edit', (req,res)=>{

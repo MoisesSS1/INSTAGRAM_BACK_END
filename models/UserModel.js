@@ -1,8 +1,7 @@
-const { Schema } = require('mongoose')
 const mongoose = require('../db/connDB')
 
 
-const User = mongoose.model('User', new Schema({
+const UserModel = mongoose.model('User', {
     name:{
         type:String,
         required:true
@@ -23,7 +22,7 @@ const User = mongoose.model('User', new Schema({
         type:Array
     }
 
-}))
+})
 
-module.exports = User
+module.exports = UserModel
 
