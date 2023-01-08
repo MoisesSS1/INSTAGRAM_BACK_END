@@ -3,7 +3,7 @@ const controllers = require('../controllers/UserControllers')
 
 
 //Criação de conta
-router.post('/create', controllers.CreateController)
+router.post('/create', controllers.CreateUserController)
 
 //puxar os dados atuais da conta para editar
 router.get('/edit', (req,res)=>{
