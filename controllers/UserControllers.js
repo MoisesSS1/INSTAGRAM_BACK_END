@@ -3,9 +3,13 @@ const UserModel  = require('../models/UserModel')
 const bcript = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const cors = require('cors')
+<<<<<<< HEAD
 
 //helpers
 const getToken = require('../helpers/getToken')
+=======
+const {ObjectId} = require('mongoose')
+>>>>>>> 880703ce742f7f2c66459e430a519b4b9e2dc9a3
 
 
 
@@ -47,10 +51,18 @@ exports.Create = async (req,res)=>{
     let user;
 
     try{
+<<<<<<< HEAD
        const user = await UserModel.create(userSave)
 
        //gerando token de acesso
         const token = await getToken(user)
+=======
+       const userSave = await UserModel.create(user)
+
+       //gerando token de acesso
+       const _id = userSave._id.toString()
+       const token = await jwt.sign(_id, process.env.JWT_SECRET)
+>>>>>>> 880703ce742f7f2c66459e430a519b4b9e2dc9a3
        
         return res.status(200).json({
             auth:true,
@@ -60,6 +72,7 @@ exports.Create = async (req,res)=>{
     } catch(error){
         return res.status(422).json({message:`Houve um erro: ${error}`})
     }      
+<<<<<<< HEAD
     
 }
 
@@ -94,6 +107,8 @@ exports.Login = async (req,res)=>{
     }
 
 
+=======
+>>>>>>> 880703ce742f7f2c66459e430a519b4b9e2dc9a3
     
 
 }
