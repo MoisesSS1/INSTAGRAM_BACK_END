@@ -1,27 +1,31 @@
 const router = require('express').Router()
-const controllers = require('../controllers/UserControllers')
+const UserControllers = require('../controllers/UserControllers')
 
+//public routes
+        //Criação de conta
+        router.post('/create', UserControllers.Create)
 
-//Criação de conta
-router.post('/create', controllers.CreateUserController)
-
-//puxar os dados atuais da conta para editar
-router.get('/edit', (req,res)=>{
-    
-})
-
-//Salvar dados editados
-router.post('/edit', (req,res)=>{
-    res.send('')
-})
+        //login
+        router.post('/login', UserControllers.Login)
 
 
 
-//excluir conta
 
-router.post('/edit/delete', (req,res)=>{
-    res.send('')
-})
+//private routes
+        //puxar os dados atuais da conta para editar
+        router.get('/edit', (req,res)=>{
+                
+        })
+
+        //Edit
+        router.post('/edit', (req,res)=>{
+             res.send('')
+        })
+
+        //delete accont
+        router.post('/edit/delete', (req,res)=>{
+                res.send('')
+        })
 
 
 
