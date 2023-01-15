@@ -1,39 +1,21 @@
 const router = require('express').Router()
 const PublicationControllers = require('../controllers/PublicationControllers')
-const jwt = require('jsonwebtoken')
 
-const ObjectId = require ('mongoose'). Types.ObjectId;
+//checa se usuario esta logado, rotas privadas
+const {checkUserIsLogged} = require('../helpers/checkUserIsLogged')
 
-async function checkToken(req,res,next) {
-    const Authorization = await req.headers.authorization
+//private routes 
+                //ver todas as pub
+                router.get('/', checkUserIsLogged, PublicationControllers.Posts)
 
-    const token = await Authorization.split(' ')[1]
-    
-    const checkUserToken = await jwt.decode(token)
+                //Criar pub
+                router.post('/create', checkUserIsLogged, PublicationControllers.Create)
 
-    //checa se o do usuario é ObjectId válido
-    const checkObjectId = await ObjectId.isValid(checkUserToken)
+                //listar minhas pubs
+                router.post('/mypubs', checkUserIsLogged, PublicationControllers.MyPubs)
 
-    if(checkObjectId){
-        return next()  
-
-    }else{
-        return res.status(422).json({message:"Id de usuario nao existe!"})
-    }
-
-}
-
-//ver todas as pub
-router.get('/', checkToken, PublicationControllers.Posts)
-
-//Criar pub
-router.post('/create', checkToken, PublicationControllers.Create)
-
-//listar minhas pubs
-router.post('/mypubs', checkToken, PublicationControllers.MyPubs)
-
-//editar pub
-router.post('/edit/:id', checkToken, PublicationControllers.Edit)
+                //editar pub
+                router.post('/edit/:id', checkUserIsLogged, PublicationControllers.Edit)
 
 
 module.exports = router

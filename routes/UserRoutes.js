@@ -9,7 +9,8 @@ const UserControllers = require('../controllers/UserControllers')
         router.post('/login', UserControllers.Login)
 
 
-//private routes editar usuario
+//private routes 
+//editar usuario
 
 
 
