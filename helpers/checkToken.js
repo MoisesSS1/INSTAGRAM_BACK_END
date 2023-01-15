@@ -13,4 +13,4 @@ async function checkToken(req,res,next) {
        
 }
 
-module.exposts = checkToken
+module.exports = {checkToken}

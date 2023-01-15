@@ -1,12 +1,25 @@
 const jwt = require('jsonwebtoken')
+const UserModel = require('../models/UserModel')
 
-async function checkUserForToken(req) {
-    const Authorization = await req.headers.authorization
-    const token = await Authorization.split(' ')[1]
-    
-    const UserId = await jwt.decode(token)
+//verifica se token é valido
 
-    return UserId
+async function checkUserForToken (req) {
+        const Authorization = await req.headers.authorization
+        const token = await Authorization.split(' ')[1]
+        
+        const UserId = await jwt.decode(token)
+
+        const userExist = await UserModel.find({_id:UserId})
+        .then((data)=>{
+            return data
+        })
+        .catch((error)=>{
+            console.log(error)
+        })
+
+        console.log(userExist)
+
+        return UserId
 }
 
-module.exportst = checkUserForToken
+module.exports =  {checkUserForToken}

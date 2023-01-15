@@ -1,8 +1,9 @@
-const PublicationModel = require('../models/PublicationModel')
 const UserModel = require('../models/UserModel')
+const PublicationModel = require('../models/PublicationModel')
+
 
 //helpers
-const checkUserForToken = require('../helpers/checkUserForToken')
+const {checkUserForToken} = require('../helpers/checkUserForToken')
 
 //Todos os posts
 exports.Posts = async (req,res)=> {
@@ -10,14 +11,15 @@ exports.Posts = async (req,res)=> {
     res.json({posts:posts})
 }
 
-
 exports.Create = async (req,res)=>{
+
+    const UserId = await checkUserForToken(req)
     const {link, description} = req.body
 
-    const Authorization = await req.headers.authorization
-    const UserId = await Authorization.split(' ')[1]
-
     //validações
+    if(!UserId){
+        return res.status(422).json({message:"Token inválido!"})
+    }
     if(!link || '' ||undefined || null){
         return res.status(422).json({message:"Preencha a imagem de forma correta"})
     }
@@ -28,19 +30,31 @@ exports.Create = async (req,res)=>{
         return res.status(422).json({message:"Entre em uma conta para adicionar o post!"})
     }
 
-
+    const post = {
+        link,
+        description,
+        UserId
+    }
 
     try{
-        const post = {
-            link,
-            description,
-            UserId
-        }
+        //salva post no DBposts e salva id do posto no DBuser
         const postSave = await PublicationModel.create(post)
+        const userSavePost = await UserModel.updateOne({_id:UserId}, {$push: {publicationId:postSave._id.toString()}})
+
+        console.log(userSavePost)
         return res.status(422).json({message:"Post criado com sucesso!"})
+
     } catch(error){
        return res.status(404).json({message:`Houve um erro ao criar o post: ${error}`})
     }
 
 }
 
+exports.MyPubs = async (req,res)=>{
+
+}
+
+
+exports.Edit = async (req,res)=>{
+
+}

@@ -29,15 +29,11 @@ router.get('/', checkToken, PublicationControllers.Posts)
 //Criar pub
 router.post('/create', checkToken, PublicationControllers.Create)
 
+//listar minhas pubs
+router.post('/mypubs', checkToken, PublicationControllers.MyPubs)
+
 //editar pub
-
-
-
-//busca de publicação especifica para editar
-
-
-
-//excluir public
+router.post('/edit/:id', checkToken, PublicationControllers.Edit)
 
 
 module.exports = router

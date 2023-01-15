@@ -18,7 +18,7 @@ const Publication = mongoose.model('Publication', new Schema({
     createAt: {
         type:Date,
         default:Date.now
-    }
+    } 
 }))
 
 module.exports = Publication
