@@ -7,7 +7,7 @@ const Publication = mongoose.model('Publication', new Schema({
         type:String,
         required:true
     },
-    message:{
+    description:{
         type:String,
         required:true
     },

@@ -9,24 +9,7 @@ const UserControllers = require('../controllers/UserControllers')
         router.post('/login', UserControllers.Login)
 
 
-
-
-//private routes
-        //puxar os dados atuais da conta para editar
-        router.get('/edit', (req,res)=>{
-                
-        })
-
-        //Edit
-        router.post('/edit', (req,res)=>{
-             res.send('')
-        })
-
-        //delete accont
-        router.post('/edit/delete', (req,res)=>{
-                res.send('')
-        })
-
+//private routes editar usuario
 
 
 

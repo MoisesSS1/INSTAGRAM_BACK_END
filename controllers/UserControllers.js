@@ -87,9 +87,8 @@ exports.Login = async (req,res)=>{
 
     if(user && returnPassword ){
 
+        //gerando token
         const token = await getToken(user)
-        
-
         return res.status(200).json({auth:true,token:token})
     }
 

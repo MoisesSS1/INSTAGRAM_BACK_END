@@ -21,7 +21,7 @@ app.use(cors('http://localhost:3000'))
 
 //rotas
 app.use('/user', UserRoutes)
-app.use('/publication', PublicationRoutes)
+app.use('/post', PublicationRoutes)
 
 
 

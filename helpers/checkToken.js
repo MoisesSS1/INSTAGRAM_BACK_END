@@ -1,11 +1,16 @@
 
-async function checkToken(req,next) {
 
-    const token = await localStorage.getItem('token')
-
-
+async function checkToken(req,res,next) {
+    const Authorization = await req.headers.authorization
+    const token = await Authorization.split(' ')[1]
+    
+    const checkUserToken = await jwt.decode(token)
 
     
+
+
+
+       
 }
 
-export default checkToken
+module.exposts = checkToken
