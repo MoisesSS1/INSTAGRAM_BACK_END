@@ -14,10 +14,8 @@ async function checkUserForToken (req) {
             return data
         })
         .catch((error)=>{
-            console.log(error)
+            res.status(404).json({message:`Houve um erro no acesso do usuário, tente novamente mais tarde: ${error}`})
         })
-
-        console.log(userExist)
 
         return UserId
 }

@@ -11,6 +11,7 @@ const getToken = require('../helpers/getToken')
 
 exports.Create = async (req,res)=>{
     const {name, password, email, phone} = req.body
+    let user;
 
     //validações de preenchimento
     if(!name || name==""||name==undefined || name.lenght<=1){
@@ -44,7 +45,7 @@ exports.Create = async (req,res)=>{
         phone
     }
 
-    let user;
+    
 
     try{
        const user = await UserModel.create(userSave)

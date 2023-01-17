@@ -12,7 +12,7 @@ const {checkUserIsLogged} = require('../helpers/checkUserIsLogged')
                 router.post('/create', checkUserIsLogged, PublicationControllers.Create)
 
                 //listar minhas pubs
-                router.post('/mypubs', checkUserIsLogged, PublicationControllers.MyPubs)
+                router.get('/mypubs', checkUserIsLogged, PublicationControllers.MyPubs)
 
                 //editar pub
                 router.post('/edit/:id', checkUserIsLogged, PublicationControllers.Edit)
