@@ -79,7 +79,7 @@ exports.EditGet = async (req,res)=>{
 exports.EditPost = async (req,res)=>{
     const UserId = await checkUserForToken(req)
 
-    const {link, description,_id} = req.body
+    const {link, description, _id} = req.body
     const postUpdate = {
         link,
         description
@@ -90,7 +90,8 @@ exports.EditPost = async (req,res)=>{
         const pubData = await PublicationModel.findById(_id)
         
         //valida se user da pub é o mesmo do idUser logado
-        if(pubData.UserId!==UserId){
+        
+        if(pubData && pubData.UserId!==UserId){
             return res.status(422).json({message:"Publicação não poder ser editada, pois não é sua!"})
         }
 
@@ -113,5 +114,32 @@ exports.EditPost = async (req,res)=>{
          }   
 }
 
+exports.Delete = async (req,res)=>{
+    const {_id} = req.body
+    const UserId = await checkUserForToken(req)
+    
+        //busca o id da pub, para ver se realmente existe
 
+        try{
+            const pubData = await PublicationModel.findById(_id)
+            //valida se user da pub é o mesmo do idUser logado
+                if(pubData.UserId && pubData.UserId!== UserId){
+                    return res.status(422).json({message:"Publicação não poder ser excluida, pois não é sua!"})
+                }
+                try{
+                    await PublicationModel.deleteOne({_id:_id})
+                    return res.status(200).json({message:"Publicação excluida com sucesso!"})
+                }catch(error){
+                    return res.status(422).json({message:`Houve um erro ao excluir publicação: ${error}`})
+                } 
+
+        }catch(error){
+            return res.status(422).json({message:"Erro ao buscar publicação, provavelmente já foi excluida!"})
+        }
+        
+
+        
+        
+
+}
 
