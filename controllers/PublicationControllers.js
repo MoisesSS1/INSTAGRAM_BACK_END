@@ -65,15 +65,54 @@ exports.MyPubs = async (req,res)=>{
 
 //dados individuais para editar pub
 exports.EditGet = async (req,res)=>{
-    const id = req.params.id
+    const _id = req.params.id
 
     try{
-        const pubData = await PublicationModel.findById(id)
+        const pubData = await PublicationModel.findById(_id)
         return res.status(200).json({data:pubData})
     }catch(error){
         return res.status(422).json({message:`Houve um erro ao buscar dados da publicação: ${error}`})
     }   
 }
+
+//Salvar edições do usuario editar publicação
+exports.EditPost = async (req,res)=>{
+    const UserId = await checkUserForToken(req)
+
+    const {link, description,_id} = req.body
+    const postUpdate = {
+        link,
+        description
+    }
+
+    try{
+        //busca o id da pub, para ver se realmente existe
+        const pubData = await PublicationModel.findById(_id)
+        
+        //valida se user da pub é o mesmo do idUser logado
+        if(pubData.UserId!==UserId){
+            return res.status(422).json({message:"Publicação não poder ser editada, pois não é sua!"})
+        }
+
+        if(!link || '' ||undefined || null){
+            return res.status(422).json({message:"Preencha a imagem de forma correta!"})
+        }
+        if(!description || '' ||undefined || null){
+            return res.status(422).json({message:"Preencha a descrição de forma correta!"})
+        }
+
+                    try{
+                        const pub = await PublicationModel.findOneAndUpdate({_id,_id},postUpdate)
+                        return res.status(422).json({message:"Dados atualizados com sucesso!!"})
+                    }catch(error){
+                        return res.status(422).json({message:`Houve um erro ao buscar suas publicações: ${error}`})
+                    }
+
+         }catch(error){
+            return res.status(422).json({message:`Houve um erro ao buscar dados da publicação: ${error}`})
+         }   
+}
+
 
 
 
