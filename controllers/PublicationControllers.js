@@ -107,12 +107,11 @@ exports.EditPost = async (req,res)=>{
                     }catch(error){
                         return res.status(422).json({message:`Houve um erro ao buscar suas publicações: ${error}`})
                     }
-
+                    
          }catch(error){
             return res.status(422).json({message:`Houve um erro ao buscar dados da publicação: ${error}`})
          }   
 }
-
 
 
 
