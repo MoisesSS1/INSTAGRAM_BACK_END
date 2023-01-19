@@ -15,7 +15,13 @@ const {checkUserIsLogged} = require('../helpers/checkUserIsLogged')
                 router.get('/mypubs', checkUserIsLogged, PublicationControllers.MyPubs)
 
                 //editar pub
-                router.post('/edit/:id', checkUserIsLogged, PublicationControllers.Edit)
+                router.get('/edit/:id', checkUserIsLogged, PublicationControllers.EditGet)
+
+                //editar pub
+                router.post('/edit', checkUserIsLogged, PublicationControllers.EditPost)
+
+                //editar pub
+                router.post('/delete', checkUserIsLogged, PublicationControllers.Delete)
 
 
 module.exports = router

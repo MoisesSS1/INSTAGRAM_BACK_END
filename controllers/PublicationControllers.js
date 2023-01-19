@@ -11,6 +11,7 @@ exports.Posts = async (req,res)=> {
     res.json({posts:posts})
 }
 
+//criar publicações
 exports.Create = async (req,res)=>{
 
     const UserId = await checkUserForToken(req)
@@ -45,11 +46,12 @@ exports.Create = async (req,res)=>{
         return res.status(422).json({message:"Post criado com sucesso!"})
 
     } catch(error){
-       return res.status(404).json({message:`Houve um erro ao criar o post: ${error}`})
+       return res.status(422).json({message:`Houve um erro ao criar o post: ${error}`})
     }
 
 }
 
+//mostrar minhas publicações
 exports.MyPubs = async (req,res)=>{
 
     const UserId = await checkUserForToken(req)
@@ -57,12 +59,21 @@ exports.MyPubs = async (req,res)=>{
         const Mypubs = await PublicationModel.find({UserId:UserId})
         return res.status(200).json({data:Mypubs})
     }catch(error){
-       return res.status(404).json({message:`Houve um erro ao buscar suas publicações: ${error}`})
+       return res.status(422).json({message:`Houve um erro ao buscar suas publicações: ${error}`})
     }
 }
 
+//dados individuais para editar pub
+exports.EditGet = async (req,res)=>{
+    const id = req.params.id
 
-exports.Edit = async (req,res)=>{
-    
-
+    try{
+        const pubData = await PublicationModel.findById(id)
+        return res.status(200).json({data:pubData})
+    }catch(error){
+        return res.status(422).json({message:`Houve um erro ao buscar dados da publicação: ${error}`})
+    }   
 }
+
+
+
