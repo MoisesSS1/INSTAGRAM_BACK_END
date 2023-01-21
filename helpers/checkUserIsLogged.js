@@ -1,5 +1,4 @@
 const jwt = require('jsonwebtoken')
-const ObjectId = require ('mongoose'). Types.ObjectId;
 const UserModel = require('../models/UserModel')
 
 async function checkUserIsLogged(req,res,next) {

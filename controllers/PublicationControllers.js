@@ -41,9 +41,8 @@ exports.Create = async (req,res)=>{
         //salva post no DBposts e salva id do posto no DBuser
         const postSave = await PublicationModel.create(post)
         const userSavePost = await UserModel.updateOne({_id:UserId}, {$push: {publicationId:postSave._id.toString()}})
-
-        console.log(userSavePost)
-        return res.status(422).json({message:"Post criado com sucesso!"})
+        
+        return res.status(200).json({message:"Post criado com sucesso!"})
 
     } catch(error){
        return res.status(422).json({message:`Houve um erro ao criar o post: ${error}`})
