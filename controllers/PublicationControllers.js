@@ -55,7 +55,7 @@ exports.MyPubs = async (req,res)=>{
 
     const UserId = await checkUserForToken(req)
     try{
-        const Mypubs = await PublicationModel.find({UserId:UserId})
+        const Mypubs = await PublicationModel.find({UserId:UserId}).sort('-createAt')
         return res.status(200).json({data:Mypubs})
     }catch(error){
        return res.status(422).json({message:`Houve um erro ao buscar suas publicações: ${error}`})
@@ -74,7 +74,7 @@ exports.EditGet = async (req,res)=>{
     }   
 }
 
-//Salvar edições do usuario editar publicação
+//Salvar edições da pub
 exports.EditPost = async (req,res)=>{
     const UserId = await checkUserForToken(req)
 

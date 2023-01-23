@@ -8,11 +8,6 @@ const UserControllers = require('../controllers/UserControllers')
         //login
         router.post('/login', UserControllers.Login)
 
-
-//private routes 
-//editar usuario
-
-
-
+        //rota que retorna
 
 module.exports = router
